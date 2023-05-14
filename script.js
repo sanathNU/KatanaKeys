@@ -1,43 +1,28 @@
-// const quotes = [
-//     "Life is like riding a bicycle. To keep your balance, you must keep moving.",
-//     "The only way to do great work is to love what you do.",
-//     "Success is not final, failure is not fatal: it is the courage to continue that counts.",
-//     "Believe you can and you're halfway there.",
-//     "The future belongs to those who believe in the beauty of their dreams."
-//   ];
- 
+const quoteElement = document.getElementById('quote');
+const inputElement = document.getElementById('input');
 
-  const quote = document.getElementById("quote");
-  const input = document.getElementById("input");
-  
-  // Old function, to be replaced by new stuff
-  // function getRandomQuote() {
-  //   const index = Math.floor(Math.random() * quotes.length);
-  //   return quotes[index];
-  // }
-
-  function getRandomQuote() {
-    return fetch('/quotes')
-        .then(response => response.json())
-        .then(data => data.quotes)
-        .then(quotes => {
-            const index = Math.floor(Math.random() * quotes.length);
-            return quotes[index];
-        });
+async function getRandomQuote() {
+    const response = await fetch('http://localhost:5000/quotes');
+    const data = await response.json();
+    const quotes = data.quotes;
+    const index = Math.floor(Math.random() * quotes.length);
+    return quotes[index];
 }
 
-  
-  function displayQuote() {
-    const randomQuote = getRandomQuote();
-    quote.textContent = randomQuote;
-  }
-  
+async function displayQuote() {
+  const randomQuote = getRandomQuote();
+  randomQuote.then(quote => {
+    quoteContainer.innerText = quote;
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
   displayQuote();
-  
-  input.addEventListener("input", function() {
-    if (input.value === quote.textContent) {
-      input.value = "";
+});
+
+inputElement.addEventListener('input', function() {
+    if (inputElement.value === quoteElement.textContent) {
+      inputElement.value = '';
       displayQuote();
     }
-  });
-  
+});
