@@ -25,6 +25,28 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="script.js"></script>
+    <script >
+
+      // the link at which the quotes are posted
+      const quotesUrl = 'http://127.0.0.1:5000/quotes';
+
+      // Fetch the quotes from the Flask app
+      function fetchQuotes() {
+        return fetch(quotesUrl)
+          .then(response => response.json())
+          .then(data => data.quotes.map(quote => quote.text));
+      }
+      // Display a random quote from the fetched quotes
+      function displayRandomQuote() {
+        fetchQuotes()
+          .then(quotes => {
+            const index = Math.floor(Math.random() * quotes.length);
+            const quote = quotes[index];
+            document.getElementById('quote-text').textContent = quote;
+          });
+      }
+
+      displayRandomQuote();
+    </script>
   </body>
 </html>
