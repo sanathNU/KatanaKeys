@@ -25,3 +25,6 @@ Planned to be developed in 3 phases
 ## Tools, Libraries
 ## Features
 ## TODO
+
+## Resources from
+1. Quotes.txt file taken from https://gist.github.com/erickedji

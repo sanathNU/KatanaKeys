@@ -1,52 +1,87 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>KatanaKeys!</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  </head>
-  <body>
-    <div class="container text-center"> <!-- Added 'text-center' class to center align content -->
-      <header>
-        <h1 class="display-4">Katana Keys</h1>
-        <p class="lead">A website for those who dream!</p>
-      </header>
-      <main>
-        <div class="jumbotron">
-          <h2 id="quote-text" class="display-5"></h2>
+
+<head>
+  <title>KatanaKeys!</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+  <div class="container text-center"> <!-- Added 'text-center' class to center align content -->
+    <header>
+      <h1 class="display-4">Katana Keys</h1>
+      <p class="lead">A website for those who dream!</p>
+    </header>
+    <main>
+      <div class="jumbotron">
+        <h2 id="quote-text" class="display-5"></h2>
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Type the quote:</span>
         </div>
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text">Type the quote:</span>
-          </div>
-          <input type="text" id="input" class="form-control">
-        </div>
-      </main>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script >
+        <input type="text" id="input" class="form-control">
+        <div id="typing-speed"></div>
+      </div>
+    </main>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-      // the link at which the quotes are posted
-      const quotesUrl = 'http://127.0.0.1:5000/quotes';
+  <!-- main script -->
+  <script>
 
-      // Fetch the quotes from the Flask app
-      function fetchQuotes() {
-        return fetch(quotesUrl)
-          .then(response => response.json())
-          .then(data => data.quotes.map(quote => quote.text));
+    // the link at which the quotes are posted
+    const quotesUrl = 'http://127.0.0.1:5000/quotes';
+
+    // Fetch the quotes from the Flask app
+    function fetchQuotes() {
+      return fetch(quotesUrl)
+        .then(response => response.json())
+        .then(data => data.quotes);
+    }
+    // Display a random quote from the fetched quotes
+    function displayRandomQuote() {
+      fetchQuotes()
+        .then(quotes => {
+          const index = Math.floor(Math.random() * quotes.length);
+          const quote = quotes[index];
+          document.getElementById('quote-text').textContent = quote;
+        });
+    }
+    // updates typing speed as the user types
+    function updateTypingSpeed() {
+      const quote = document.getElementById('quote-text');
+      const endTime = new Date();
+      const timeDiff = (endTime - startTime) / 1000; // in seconds
+      const words = input.value.split(' ').length;
+      const wpm = Math.round(words / (timeDiff / 60));
+      // Display typing speed
+      document.getElementById('typing-speed').textContent = `Typing speed: ${wpm} wpm`;
+    }
+    // Check whether the input of the user is right or not
+    function checkQuote() {
+      const quote = document.getElementById('quote-text');
+      if (input.value === quote.textContent) {
+        input.value = "";
+        displayRandomQuote();
+        // Reset typing speed
+        document.getElementById('typing-speed').textContent = "";
+        startTime = null;
+
+      } else if (input.value.length === 1 && startTime === null) {
+        // Start timer when user starts typing
+        startTime = new Date();
+        // Update typing speed every second
+        setInterval(updateTypingSpeed, 1000);
       }
-      // Display a random quote from the fetched quotes
-      function displayRandomQuote() {
-        fetchQuotes()
-          .then(quotes => {
-            const index = Math.floor(Math.random() * quotes.length);
-            const quote = quotes[index];
-            document.getElementById('quote-text').textContent = quote;
-          });
-      }
+    }
+    let startTime = null;
+    displayRandomQuote();
+    input.addEventListener("input", checkQuote);
 
-      displayRandomQuote();
-    </script>
-  </body>
+  </script>
+</body>
+
 </html>
