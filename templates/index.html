@@ -59,7 +59,19 @@
       const wpm = Math.round(words / (timeDiff / 60));
       // Display typing speed
       document.getElementById('typing-speed').textContent = `Typing speed: ${wpm} wpm`;
+
+      // Sending data to flask app
+      const data= {
+        typingSpeed: wpm
+      };
+
+      fetch('/currentsession',{method: 'POST', body: data.typingSpeed.toString()})
+      .catch(error => {
+      console.error('Error:', error); // Log and print the error to the console
+    });
+
     }
+    
     // Check whether the input of the user is right or not
     function checkQuote() {
       const quote = document.getElementById('quote-text');
