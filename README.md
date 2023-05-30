@@ -22,6 +22,15 @@ Planned to be developed in 3 phases
 * Create an option for genres of different types of quotes.
 * Scrap from everything. Create an LLM model that spits out good stuff depending on the user's workablility.
 
+### How to Use
+1. Basically, first clone the github repository <br>
+`git clone https://github.com/sanathNU/KatanaKeys.git `
+2. If wanted, create a virtual environment using venv and activate the virtual environment.
+3. Run the python flask app using the following command <br>
+` python app.py ` <br>
+The app should start running and can be accessed by entering ` http://localhost:5000 ` on browser.
+
+
 ## Tools, Libraries
 ## Features
 ## TODO
