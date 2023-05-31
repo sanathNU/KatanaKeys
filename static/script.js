@@ -39,6 +39,10 @@ function updateTypingSpeed() {
 function checkQuote() {
 
     const quote = document.getElementById('quote-text');
+    const WordsInQuote = quote
+    .textContent.split(' ')
+    .length;
+    
     if (input.value == quote.textContent) {
     input.value = "";
     displayRandomQuote();
@@ -57,7 +61,7 @@ function checkQuote() {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({typingSpeeds: wpmArray})
+        body: JSON.stringify({WIQ: WordsInQuote, typingSpeeds: wpmArray})
     })
     .then(response => response.text())
     .then(data => console.log(data))

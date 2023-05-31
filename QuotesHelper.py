@@ -31,3 +31,5 @@ def getQuotes():
 
     return quotes
 
+def saveStats(perGameStats):
+    pass
