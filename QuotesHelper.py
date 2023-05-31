@@ -1,3 +1,6 @@
+# Libraries to be imported
+import wikiquote
+import random
 
 ## Function to open the quotes.txt file and read through the contents
 def readQuotes(path_to_file):
@@ -16,3 +19,15 @@ def readQuotes(path_to_file):
             q+=line.strip() + ' '
 
     return quotes
+
+## Function to get quotes from wikiquotes website using the api provided
+def getQuotes():
+    titles = wikiquote.random_titles(max_titles=10)
+
+    quotes = []
+    for title in titles:
+        quotes.extend([x.strip()+' ' for x in wikiquote.quotes(title)])
+    random.shuffle(quotes)
+
+    return quotes
+
