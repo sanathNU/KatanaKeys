@@ -1,6 +1,7 @@
 # Libraries to be imported
 import wikiquote
 import random
+import csv
 
 ## Function to open the quotes.txt file and read through the contents
 def readQuotes(path_to_file):
@@ -31,5 +32,3 @@ def getQuotes():
 
     return quotes
 
-def saveStats(perGameStats):
-    pass

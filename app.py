@@ -1,6 +1,7 @@
 from flask import Flask, flash, request, redirect, url_for, render_template, jsonify, send_from_directory
 from flask_restful import Api, Resource
-import random
+import random, time, atexit
+import pandas as pd
 from  QuotesHelper import *
 
 app = Flask(__name__)
@@ -14,20 +15,39 @@ class Quotes(Resource):
 
 api.add_resource(Quotes, '/quotes')
 
+# Defining all global variables
+SaveLocation = ''
+GameStats = {'QuotesLength': [],
+              'WPM': [],
+              'InGameSpeeds': []}
+
 @app.route('/')
-def index(): 
+def index():
+    # Creating a file name with current date and time
+    global SaveLocation
+    DataFileName = time.strftime("%Y%m%d-%H%M%S") + '.csv'
+    SaveLocation = 'userstats/' + DataFileName
     return render_template('index.html')
+
+# Stores the final session user stats in a .csv file
+def writeUserStats():
+    df = pd.DataFrame(GameStats)
+    df.to_csv(SaveLocation,index=False)
 
 # Saving the stats later for data analysis
 @app.route('/currentsession',methods=['POST'])
 def handle_session():
     # Extracting the list of in-game speeds
     values = request.json
-    WordsInQuote = values['WIQ']
-    InGameSpeeds = values['typingSpeeds']
-    # InGameSpeeds = list(request.json.values())[0]
-    print(values)
+    GameStats['QuotesLength'].append(values['WIQ'])
+    GameStats['WPM'].append(values['typingSpeeds'][-1])  
+    GameStats['InGameSpeeds'].append('-'.join(list(map(str,values['typingSpeeds']))))
+    # print(values,GameStats)
+
     return 'OK'
+
+# At end of flask app calls script
+atexit.register(writeUserStats)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port=5000,debug=True)
