@@ -46,8 +46,8 @@ def handle_session():
 
     return 'OK'
 
-# At end of flask app calls script
-atexit.register(writeUserStats)
+# At end of flask app calls function to write down the stats
+# atexit.register(writeUserStats)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port=5000,debug=True)

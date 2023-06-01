@@ -87,3 +87,11 @@ displayRandomQuote();
 })
 document.getElementById('Ptyping-speed').textContent = "Previous Speed 0 wpm";
 input.addEventListener("input", checkQuote);
+
+// functionality of change quote button
+const changeButton = document.querySelector('#change-button');
+changeButton.addEventListener('click',() => {
+    const input = document.querySelector('#input');
+    input.value = '';
+    displayRandomQuote(); 
+});
