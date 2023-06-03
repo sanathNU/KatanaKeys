@@ -35,10 +35,32 @@ function updateTypingSpeed() {
 
 }
 
+
+// function for highlighting current word
+function highlightCurrentWord() {
+    const quoteText = document.getElementById('quote-text');
+    const inputText = input.value;
+    const quoteWords = quoteText.textContent.split(' ');
+
+    let highlightedQuote = '';
+    let currentWordIndex = inputText.split(' ').length - 1;
+
+    for (let i=0; i< quoteWords.length; i++){
+        if ( i==currentWordIndex){
+            highlightedQuote += `<span class="highlight">${quoteWords[i]}</span> `;
+        }
+        else {
+            highlightedQuote += `${quoteWords[i]} `;
+        }
+        quoteText.innerHTML = highlightedQuote;
+    }
+
+}
 // Check whether the input of the user is right or not
 function checkQuote() {
 
     const quote = document.getElementById('quote-text');
+    // highlightCurrentWord();
     const WordsInQuote = quote
     .textContent.split(' ')
     .length;
