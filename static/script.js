@@ -42,35 +42,39 @@ function highlightCurrentWord() {
     const inputText = input.value;
     const quoteWords = quoteText.textContent.split(' ');
 
-    // just added for debugging
-    console.log('quoteText:', quoteText);
-    console.log('inputText:', inputText);
-    console.log('quoteWords:', quoteWords);
-
     let highlightedQuote = '';
     let currentWordIndex = inputText.split(' ').length - 1;
+    let inputWords = inputText.split(' ');
 
-    for (let i=0; i< quoteWords.length; i++){
-        if ( i==currentWordIndex){
-            highlightedQuote += `<span class="highlight">${quoteWords[i]}</span> `;
-        }
-        else {
+    for (let i = 0; i < quoteWords.length; i++) {
+        if (i == currentWordIndex) {
+            let currentInputWord = inputWords[i];
+            let currentQuoteWord = quoteWords[i];
+            let highlightedWord = '';
+            for (let j = 0; j < currentQuoteWord.length; j++) {
+                if (j < currentInputWord.length && currentInputWord[j] != currentQuoteWord[j]) {
+                    highlightedWord += `<span class="highlight-red">${currentQuoteWord[j]}</span>`;
+                } else {
+                    highlightedWord += currentQuoteWord[j];
+                }
+            }
+            highlightedQuote += `<span class="highlight">${highlightedWord}</span> `;
+        } else {
             highlightedQuote += `${quoteWords[i]} `;
         }
         quoteText.innerHTML = highlightedQuote;
     }
-
 }
+
+
 // Check whether the input of the user is right or not
 function checkQuote() {
 
     const quote = document.getElementById('quote-text');
     highlightCurrentWord();
-    const WordsInQuote = quote
-    .textContent.split(' ')
-    .length;
+    const WordsInQuote = quote.textContent.split(' ').length;
     
-    if (input.value == quote.textContent) {
+    if (input.value.trim().toLowerCase() == quote.textContent.trim().toLowerCase()) {
     input.value = "";
     displayRandomQuote();
     //display previous speed
