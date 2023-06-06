@@ -42,6 +42,11 @@ function highlightCurrentWord() {
     const inputText = input.value;
     const quoteWords = quoteText.textContent.split(' ');
 
+    // just added for debugging
+    console.log('quoteText:', quoteText);
+    console.log('inputText:', inputText);
+    console.log('quoteWords:', quoteWords);
+
     let highlightedQuote = '';
     let currentWordIndex = inputText.split(' ').length - 1;
 
@@ -60,7 +65,7 @@ function highlightCurrentWord() {
 function checkQuote() {
 
     const quote = document.getElementById('quote-text');
-    // highlightCurrentWord();
+    highlightCurrentWord();
     const WordsInQuote = quote
     .textContent.split(' ')
     .length;
