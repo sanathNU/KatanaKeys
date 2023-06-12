@@ -2,6 +2,7 @@
 // the link at which the quotes are posted
 const quotesUrl = 'http://127.0.0.1:5000/quotes';
 let quotesData = []; // random variable to store the fetched quotes
+let quotesAuthors =[]; //array to store names of authors
 
 let wpmArray = [];
 
@@ -10,8 +11,12 @@ function fetchQuotes() {
     return fetch(quotesUrl)
     .then(response => response.json())
     .then(data => {
-        quotesData = data.quotes;
-    });
+        quotesData = data.quotes.values();
+        quotesAuthors = data.quotes.keys();
+        console.log(quotesAuthors);
+        console.log(quotesData);
+    })
+
 }
 // Display a random quote from the fetched quotes
 function displayRandomQuote() {

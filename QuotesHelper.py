@@ -4,7 +4,7 @@ import random
 import csv
 
 ## Function to open the quotes.txt file and read through the contents
-def readQuotes(path_to_file):
+def readQuotesfromFile(path_to_file):
     # reading the file
     quotesFile = open(path_to_file,'r',encoding='utf-8',errors='ignore')
     lines = quotesFile.readlines()
@@ -13,8 +13,9 @@ def readQuotes(path_to_file):
     flag, q = 0, ''
     for line in lines:
         if '--' in line:
-            quotes.append(q.strip())
-            # print(q,'\n', line)
+            author = line.split(',')[0].replace('--','').strip()
+            # print(t)
+            quotes.append({author:q.strip()})
             q = ''
         else:
             q+=line.strip() + ' '
@@ -31,4 +32,3 @@ def getQuotes():
     random.shuffle(quotes)
 
     return quotes
-
