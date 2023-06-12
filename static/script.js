@@ -13,6 +13,8 @@ function fetchQuotes() {
     .then(data => {
         quotesData = data.quotes.values();
         quotesAuthors = data.quotes.keys();
+
+        
         console.log(quotesAuthors);
         console.log(quotesData);
     })
