@@ -27,7 +27,16 @@ def readWordsFile(path_to_file):
     # Reading from file
     wordsFile = open(path_to_file,'r')
     words = [x.strip() for x in wordsFile.readlines()]
-    print(words)
+    randSenteces = []
+
+    # creating a set of random sentences from random words
+    for i in range(200):
+        sentLen = random.randint(1,50)
+        sentence = random.sample(words,sentLen)
+        randSenteces.append(' '.join(sentence))
+    
+    return randSenteces
+   
 
 ## Function to get quotes from wikiquotes website using the api provided
 def getQuotes():
@@ -40,4 +49,4 @@ def getQuotes():
 
     return quotes
 
-readWordsFile('Quotes\10000-english.txt')
+readWordsFile('Quotes/10000-english.txt')
