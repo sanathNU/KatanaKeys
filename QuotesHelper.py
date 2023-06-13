@@ -22,6 +22,13 @@ def readQuotesfromFile(path_to_file):
 
     return quotes
 
+## Function to open file 10000-english.txt and create a random sentences using these words
+def readWordsFile(path_to_file):
+    # Reading from file
+    wordsFile = open(path_to_file,'r')
+    words = [x.strip() for x in wordsFile.readlines()]
+    print(words)
+
 ## Function to get quotes from wikiquotes website using the api provided
 def getQuotes():
     titles = wikiquote.random_titles(max_titles=10)
@@ -32,3 +39,5 @@ def getQuotes():
     random.shuffle(quotes)
 
     return quotes
+
+readWordsFile('Quotes\10000-english.txt')
