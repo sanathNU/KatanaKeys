@@ -9,8 +9,9 @@ api = Api(app)
 
 class Quotes(Resource):
     def get(self):
-        quotes = readQuotesfromFile('Quotes/quotes.txt')
+        # quotes = readQuotesfromFile('Quotes/quotes.txt'
         # quotes = getQuotes()
+        quotes = readQuotesfromFile('Quotes/10000-english.txt')
         return jsonify({'quotes': quotes})
 
 api.add_resource(Quotes, '/quotes')

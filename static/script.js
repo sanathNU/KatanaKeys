@@ -11,12 +11,13 @@ function fetchQuotes() {
     return fetch(quotesUrl)
     .then(response => response.json())
     .then(data => {
-        quotesData = data.quotes.values();
-        quotesAuthors = data.quotes.keys();
+        // quotesData = data.quotes.values();
+        // quotesAuthors = data.quotes.keys();
+        quotesData = data.quotes;
 
-        
-        console.log(quotesAuthors);
-        console.log(quotesData);
+        // quotesData = Object.values(data.quotes)
+        // console.log(quotesAuthors);
+        // console.log(quotesData);
     })
 
 }
