@@ -3,15 +3,18 @@ from flask_restful import Api, Resource
 import random, time, atexit
 import pandas as pd
 from  QuotesHelper import *
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
 api = Api(app)
+
+CORS(app)
 
 class Quotes(Resource):
     def get(self):
         # quotes = readQuotesfromFile('Quotes/quotes.txt'
         # quotes = getQuotes()
-        quotes = readQuotesfromFile('Quotes/10000-english.txt')
+        quotes = readWordsFile('Quotes/10000-english.txt')
         return jsonify({'quotes': quotes})
 
 api.add_resource(Quotes, '/quotes')
